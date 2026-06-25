@@ -1,0 +1,382 @@
+/* Mind Heist — dark heist/cyberpunk aesthetic.
+   Mobile-first, then enhanced for wide screens.
+   No framework, no preprocessor.                                          */
+
+:root {
+  --bg: #0b0c10;
+  --bg-elev: #14161d;
+  --bg-elev-2: #1c1f29;
+  --ink: #e8eaed;
+  --ink-dim: #9aa0a6;
+  --line: #2a2e3a;
+  --accent: #5bf0d8;   /* cyan, "go" signal */
+  --accent-2: #ff5bd1; /* magenta, "secret" signal */
+  --danger: #ff7a7a;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+  --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, sans-serif;
+  --mono: ui-monospace, "JetBrains Mono", "Fira Code", Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: radial-gradient(1200px 600px at 80% -10%, #1c2640 0%, transparent 60%),
+              radial-gradient(900px 500px at -10% 110%, #2a1632 0%, transparent 55%),
+              var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Buttons ----------------------------------------------------- */
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.05s ease, background 0.15s ease, border-color 0.15s ease;
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+.btn--primary {
+  background: var(--accent);
+  color: #03150f;
+}
+.btn--primary:hover { background: #7df3df; }
+.btn--primary[disabled] { opacity: 0.5; cursor: progress; }
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn--ghost:hover { border-color: var(--ink-dim); }
+.btn--small { padding: 8px 12px; font-size: 14px; }
+
+/* ---------- Title screen ----------------------------------------------- */
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  margin: auto 0;
+  padding: 32px 8px;
+}
+.title__crest {
+  font-size: 64px;
+  filter: drop-shadow(0 0 24px rgba(91, 240, 216, 0.35));
+}
+.title__name {
+  font-size: clamp(36px, 8vw, 64px);
+  margin: 0;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.title__tag {
+  color: var(--ink-dim);
+  max-width: 480px;
+  margin: 0;
+}
+.title__cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+.title__byok {
+  color: var(--ink-dim);
+  font-size: 13px;
+  margin-top: 24px;
+  max-width: 420px;
+}
+.progress {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+.progress__bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-elev-2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 0.4s ease;
+}
+.progress__label {
+  font-size: 12px;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ---------- Level screen ----------------------------------------------- */
+
+.lvl__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.lvl__meta { text-align: center; line-height: 1.2; }
+.lvl__num {
+  font-size: 11px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.lvl__title { font-weight: 700; }
+
+.lvl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 16px;
+  flex: 1;
+}
+@media (min-width: 760px) {
+  .lvl {
+    grid-template-columns: 280px 1fr;
+    align-items: start;
+  }
+}
+
+.dossier {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+.dossier__avatar { font-size: 40px; }
+.dossier__name {
+  font-weight: 700;
+  margin-top: 4px;
+  font-size: 18px;
+}
+.dossier__intro {
+  color: var(--ink-dim);
+  font-size: 14px;
+  margin: 8px 0 12px;
+}
+.dossier__hint {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-size: 13px;
+}
+.dossier__hint summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--accent);
+}
+.dossier__hint p { margin: 8px 0 0; color: var(--ink-dim); }
+.dossier__stats { margin-top: 14px; font-size: 13px; color: var(--ink-dim); }
+.dossier__stats .stat strong { color: var(--ink); font-size: 16px; }
+
+/* ---------- Chat -------------------------------------------------------- */
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 480px;
+}
+.chat__log {
+  flex: 1;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  max-height: 64vh;
+}
+.chat__form {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-elev-2);
+}
+.chat__input {
+  flex: 1;
+  resize: none;
+  font: inherit;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  min-height: 44px;
+  max-height: 160px;
+}
+.chat__input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.msg {
+  display: flex;
+  gap: 10px;
+  max-width: 88%;
+}
+.msg--keeper { align-self: flex-start; }
+.msg--player { align-self: flex-end; flex-direction: row-reverse; }
+.msg__avatar {
+  width: 32px; height: 32px;
+  flex: 0 0 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-elev-2);
+  border-radius: 50%;
+  font-size: 18px;
+}
+.msg__body {
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+}
+.msg--player .msg__body {
+  background: rgba(91, 240, 216, 0.08);
+  border-color: rgba(91, 240, 216, 0.25);
+}
+.msg--win .msg__body {
+  background: rgba(255, 91, 209, 0.08);
+  border-color: rgba(255, 91, 209, 0.45);
+  box-shadow: 0 0 0 2px rgba(255, 91, 209, 0.15);
+}
+.msg__author {
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.msg__text { white-space: pre-wrap; word-wrap: break-word; }
+
+.msg--thinking .dots { display: inline-flex; gap: 4px; padding: 6px 0; }
+.msg--thinking .dots span {
+  width: 6px; height: 6px;
+  background: var(--ink-dim);
+  border-radius: 50%;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+.msg--thinking .dots span:nth-child(2) { animation-delay: 0.15s; }
+.msg--thinking .dots span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes bounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+  40% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* ---------- Win screen ------------------------------------------------- */
+
+.win {
+  margin: auto 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  padding: 32px 8px;
+}
+.win__seal { font-size: 56px; }
+.win__title {
+  margin: 0;
+  font-size: clamp(28px, 6vw, 40px);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.win__line { color: var(--ink); max-width: 480px; }
+.win__best { color: var(--ink-dim); font-size: 14px; }
+.win__cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+
+/* ---------- Settings modal --------------------------------------------- */
+
+.modal__overlay {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 50;
+}
+.modal {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  width: min(440px, 100%);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.modal h3 { margin: 0; }
+.modal label {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  letter-spacing: 0.08em;
+  margin-top: 6px;
+}
+.modal input {
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+.modal input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.modal__hint { color: var(--ink-dim); font-size: 13px; margin: 0; }
+.modal__hint a { color: var(--accent); }
+.modal__cta {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
