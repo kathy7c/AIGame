@@ -3,6 +3,7 @@
 > **An AI-native browser game.** Six LLM-powered vault keepers. Six secret words. Talk your way in.
 
 **▶ Play it now: <https://kathy7c.github.io/AIGame/>**
+*(Live after the one-time Pages enablement — see [Deployment](#deployment) below.)*
 
 Built for the **AINative Challenge** — a game whose core mechanic *is* an LLM,
 not a chatbot bolted onto one. Each level you face an AI character with a
@@ -106,6 +107,27 @@ python3 -m http.server 8000
 
 To add a level, append an object to [`assets/levels.js`](./assets/levels.js).
 That's the whole API.
+
+---
+
+## Deployment
+
+CI/CD lives in [`.github/workflows/pages.yml`](./.github/workflows/pages.yml).
+Every push to `main` deploys the repo root to GitHub Pages.
+
+**First-time setup (one click, must be done by repo owner):**
+
+1. Go to <https://github.com/kathy7c/AIGame/settings/pages>
+2. Under **Build and deployment** → **Source**, choose **GitHub Actions**
+3. That's it. The next push to `main` deploys to
+   <https://kathy7c.github.io/AIGame/>.
+
+After that, the workflow runs automatically on every push and the live
+URL stays in sync with `main`.
+
+> Why this manual step exists: enabling Pages requires repo-admin scope,
+> which neither the CI `GITHUB_TOKEN` nor automation tokens carry by
+> default. It's a one-time human gate, not an ongoing chore.
 
 ---
 
