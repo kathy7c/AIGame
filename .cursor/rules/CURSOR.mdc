@@ -1,0 +1,73 @@
+---
+description: AIGame project conventions
+alwaysApply: true
+---
+
+# AIGame — Project Rules
+
+## What this is
+"Mind Heist" — an AI-native browser game built for the AINative Challenge.
+Player chats with LLM-powered "vault keepers" across 6 levels and must
+social-engineer them into revealing a secret password. The game cannot
+exist without an LLM — the AI *is* the gameplay.
+
+## Architecture decisions (and why)
+
+- **Pure static (HTML/CSS/JS, no build, no framework).** GitHub Pages
+  serves it as-is. Zero CI compile time. Total bundle < 50 KB.
+- **BYOK (bring-your-own-key).** Player pastes an OpenAI-compatible
+  API key once; stored in `localStorage`. No backend → no hosting cost,
+  no key leakage, no rate-limit dramas. Privacy by design.
+- **OpenAI-compatible chat completions endpoint.** Works with OpenAI,
+  OpenRouter, Together, Groq, Ollama, etc. One protocol, many providers.
+- **Levels defined as data, not code.** `levels.js` is a config array;
+  adding a level = adding an object. No engine refactor needed.
+
+## File layout
+
+```
+/                       repo root (served by GitHub Pages)
+├── index.html          single page, no router
+├── assets/
+│   ├── styles.css
+│   ├── game.js         UI + state machine
+│   ├── llm.js          API client (OpenAI-compatible)
+│   └── levels.js       level config (character, secret, defenses)
+├── docs/
+│   ├── AI_USAGE.md     how AI is used in gameplay AND development
+│   └── PROBLEM_VALIDATION.md   problem, customer, validation evidence
+├── .github/workflows/pages.yml   deploy to GitHub Pages
+├── README.md           playable link, how-to-play, BYOK guide
+└── LICENSE             MIT
+```
+
+## Coding conventions
+
+- ES modules in browser (`<script type="module">`). No bundler.
+- `const` by default; `let` only when reassignment is real.
+- No external runtime dependencies. Vanilla JS only.
+- Tailwind-style utility CSS NOT used; hand-written CSS, BEM-ish naming.
+- Strings shown to the player live in HTML or `levels.js`, never hardcoded
+  inside `game.js` UI logic.
+- API key never logged, never sent anywhere except the configured endpoint.
+
+## What NOT to do
+
+- No build tooling (vite/webpack/etc.). If you reach for it, stop and ask.
+- No analytics, no telemetry, no third-party scripts.
+- No backend service. If a feature seems to need one, redesign.
+- No "AI safety" disclaimers in UI — the whole point of the game is to
+  jailbreak the keeper. Stay in voice.
+
+## Deployment
+
+- `main` branch root is the source for GitHub Pages.
+- `.github/workflows/pages.yml` deploys on every push to `main`.
+- Live URL: `https://kathy7c.github.io/AIGame/`
+- README must always carry a working playable link.
+
+## When to update this file
+
+Before changing structure (adding `src/`, switching to a framework, adding
+a build step). Doc-first, code-second. If practice and rules disagree,
+update rules first, then code to match.
